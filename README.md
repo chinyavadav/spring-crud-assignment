@@ -30,6 +30,5 @@ mvn spring-boot:run
 
 ## Documentation
 
-For your convenience, I have drafted Postman documentation which you can find on this [link](https://app.getpostman.com/api/collections/6cddb178b35ced5ae03f?). Kindly download and configure to your local Postman.
-Alternatively use Swagger which is running on [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
+Swagger is running on [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
 
