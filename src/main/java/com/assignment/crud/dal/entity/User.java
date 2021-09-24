@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table
+@Table(name = "users")
 @Where(clause = "deleted is null")
 public class User extends BaseEntity {
     @Column(nullable = false)
@@ -26,6 +26,9 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String jobTitle;
+
+    public User() {
+    }
 
     public String getTitle() {
         return title;
