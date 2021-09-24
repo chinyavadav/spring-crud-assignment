@@ -2,9 +2,9 @@ package com.assignment.crud.controller;
 
 import com.assignment.crud.common.PaginatedDto;
 import com.assignment.crud.common.ResponseTemplate;
-import com.assignment.crud.dal.entity.User;
+import com.assignment.crud.dal.entity.UserDetail;
 import com.assignment.crud.dto.CreateUpdateUserDto;
-import com.assignment.crud.dto.UserDto;
+import com.assignment.crud.dto.UserDetailDto;
 import com.assignment.crud.exception.CustomException;
 import com.assignment.crud.service.UserServiceImpl;
 import io.swagger.annotations.Api;
@@ -32,50 +32,47 @@ public class UserController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "Create new User", response = ResponseTemplate.class)
-    public ResponseTemplate<UserDto> create(
+    public ResponseTemplate<UserDetailDto> create(
             @ApiParam("CreateUpdateUserDto") @RequestBody CreateUpdateUserDto createUpdateUserDto) {
-        UserDto userDto = userService.create(createUpdateUserDto);
-        return new ResponseTemplate<>("success", "User successfully created!", userDto);
+        UserDetailDto userDetailDto = userService.create(createUpdateUserDto);
+        return new ResponseTemplate<>("success", "User successfully created!", userDetailDto);
     }
 
     @GetMapping(path = "/{userId}",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "Finds User by User Id", response = ResponseTemplate.class)
-    public ResponseTemplate<UserDto> findById(@ApiParam("userId") @PathVariable UUID userId) {
-        User user = userService.findById(userId);
-        if (user != null) {
+    public ResponseTemplate<UserDetailDto> findById(@ApiParam("userId") @PathVariable UUID userId) {
+        UserDetail userDetail = userService.findById(userId);
+        if (userDetail != null) {
             return new ResponseTemplate<>(
                     "success",
-                    "User updated successfully!",
-                    userService.map(user)
+                    "User has been found!",
+                    userService.map(userDetail)
             );
         }
         throw new CustomException("User does not exist!", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(path = "/find",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ApiOperation(value = "Finds User by User Id", response = ResponseTemplate.class)
-    public ResponseTemplate<List<UserDto>> findById(
-            @ApiParam("field") @RequestParam(name = "field") String field,
-            @ApiParam("value") @RequestParam(name = "value") Object value) {
-        List<UserDto> userDtoList = userService.findByField(field, value)
+    @ApiOperation(value = "Finds User by id, firstName or lastName", response = ResponseTemplate.class)
+    public ResponseTemplate<List<UserDetailDto>> findById(
+            @ApiParam(name = "value") @RequestParam(name = "value") String value) {
+        List<UserDetailDto> userDetailDtoList = userService.findAllByIdOrFirstNameOrLastName(value)
                 .stream()
                 .map(userService::map)
                 .collect(Collectors.toList());
-        return new ResponseTemplate<>("success", null, userDtoList);
+        return new ResponseTemplate<>("success", null, userDetailDtoList);
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "Paginated Users List", response = PaginatedDto.class)
-    public PaginatedDto<UserDto> list(
+    public PaginatedDto<UserDetailDto> list(
             @ApiParam("page") @RequestParam(name = "page", defaultValue = "1", required = false) int page,
             @ApiParam("size") @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
-        PaginatedDto<User> userPaginatedDto = userService.getPaginated(page, size);
+        PaginatedDto<UserDetail> userPaginatedDto = userService.getPaginated(page, size);
         return new PaginatedDto<>(
-                userPaginatedDto.getObjects().stream().map(userService::map).collect(Collectors.toList()),
+                userPaginatedDto.getData().stream().map(userService::map).collect(Collectors.toList()),
                 userPaginatedDto.getLinks()
         );
     }
@@ -84,17 +81,17 @@ public class UserController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "Update User", response = ResponseTemplate.class)
-    public ResponseTemplate<UserDto> update(
+    public ResponseTemplate<UserDetailDto> update(
             @ApiParam("userId") @PathVariable UUID userId,
             @ApiParam("CreateUpdateUserDto") @RequestBody CreateUpdateUserDto createUpdateUserDto) {
-        UserDto userDto = userService.update(userId, createUpdateUserDto);
-        return new ResponseTemplate<>("success", "User updated successfully!", userDto);
+        UserDetailDto userDetailDto = userService.update(userId, createUpdateUserDto);
+        return new ResponseTemplate<>("success", "User updated successfully!", userDetailDto);
     }
 
 
     @DeleteMapping(path = "/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "Delete new Book", response = ResponseTemplate.class)
-    public ResponseTemplate<UserDto> delete(@ApiParam("userId") @PathVariable UUID userId) {
+    public ResponseTemplate<UserDetailDto> delete(@ApiParam("userId") @PathVariable UUID userId) {
         boolean deleted = userService.delete(userId);
         return new ResponseTemplate<>(deleted ? "success" : "failed",
                 deleted ? "User successfully deleted!" : "User could not be deleted",

@@ -24,7 +24,6 @@ public class BaseEntity {
     @UpdateTimestamp
     private ZonedDateTime updatedAt;
 
-    @UpdateTimestamp
     private ZonedDateTime deletedAt;
 
     public UUID getId() {

@@ -3,20 +3,20 @@ package com.assignment.crud.common;
 import java.util.List;
 
 public class PaginatedDto<T> {
-    List<T> objects;
+    List<T> data;
     PaginationLink links;
 
-    public PaginatedDto(List<T> objects, PaginationLink links) {
-        this.objects = objects;
+    public PaginatedDto(List<T> data, PaginationLink links) {
+        this.data = data;
         this.links = links;
     }
 
-    public List<T> getObjects() {
-        return objects;
+    public List<T> getData() {
+        return data;
     }
 
-    public void setObjects(List<T> objects) {
-        this.objects = objects;
+    public void setData(List<T> objects) {
+        this.data = data;
     }
 
     public PaginationLink getLinks() {

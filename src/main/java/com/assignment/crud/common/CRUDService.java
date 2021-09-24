@@ -8,8 +8,6 @@ public interface CRUDService<T> {
 
     T findById(UUID id);
 
-    List<T> findByField(String field, Object value);
-
     PaginatedDto<T> getPaginated(int page, int size);
 
     boolean delete(UUID id);

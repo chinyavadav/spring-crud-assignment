@@ -1,8 +1,8 @@
 # CRUD Assignment
 
-We have a collection of users, and we wish to create a microservice that will perform the basic CRUD
-operations (Create, Read Update &amp; Delete), plus the ability to search for a user by their first name, last name and ID.
-The user information must be persisted to a database (can be any database: NoSQL or SQL DB)
+We have a collection of userDetail, and we wish to create a microservice that will perform the basic CRUD
+operations (Create, Read Update &amp; Delete), plus the ability to search for a userDetail by their first name, last name and ID.
+The userDetail information must be persisted to a database (can be any database: NoSQL or SQL DB)
 
 ## What I would have done better
 

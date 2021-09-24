@@ -6,12 +6,12 @@ import org.hibernate.annotations.Where;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Entity
-@Table(name = "users")
-@Where(clause = "deleted is null")
-public class User extends BaseEntity {
+@Table
+@Where(clause = "deleted_at is null")
+public class UserDetail extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
@@ -21,13 +21,13 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
-    private ZonedDateTime dob;
+    @Column(nullable = false, length = 10)
+    private Date dob;
 
     @Column(nullable = false)
     private String jobTitle;
 
-    public User() {
+    public UserDetail() {
     }
 
     public String getTitle() {
@@ -54,11 +54,11 @@ public class User extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public ZonedDateTime getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(ZonedDateTime dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -72,7 +72,7 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDetail{" +
                 "title='" + title + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

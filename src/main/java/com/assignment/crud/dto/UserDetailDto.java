@@ -1,16 +1,18 @@
 package com.assignment.crud.dto;
 
 import com.assignment.crud.common.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
-public class UserDto extends BaseDto {
+public class UserDetailDto extends BaseDto {
     private String title;
     private String firstName;
     private String lastName;
-    private ZonedDateTime dob;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date dob;
     private String jobTitle;
-
 
 
     public String getTitle() {
@@ -37,11 +39,11 @@ public class UserDto extends BaseDto {
         this.lastName = lastName;
     }
 
-    public ZonedDateTime getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(ZonedDateTime dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
